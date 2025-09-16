@@ -8,3 +8,6 @@ name = "parquet_population"
 path = "main.rs"
 
 [dependencies]
+clap = "4.5.47"
+inquire = "0.9.1"
+chrono = { workspace = true }

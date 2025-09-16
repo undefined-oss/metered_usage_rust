@@ -1,4 +1,4 @@
-.PHONY: dev-third-party-services dev-all dev-start-api dev-parquet build-prod-api-image build-and-publish-prod-api-image start-again dev-container-start-api test-post help
+.PHONY: dev-third-party-services dev-all dev-start-api dev-parquet build-prod-api-image build-and-publish-prod-api-image start-again dev-container-start-api test-post dev-parquet-help help
 
 help: # Show help for each of the Makefile recipes.
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
@@ -24,9 +24,11 @@ dev-all: # Launch all services in the profile "all" on mode watch
 dev-start-api: # Running the api on mode watch (Non container mode)
 	RUST_LOG=INFO bacon api
 
-dev-parquet: # Running the parquet binary on mode watch (Non container mode)
-	bacon parqet
+dev-parquet: # Build in dev mode the MET CLI  (Non container mode)
+	cargo build --bin parquet_population
 
+dev-parquet-help: # Command to show the command need it to run the cli on dev mode
+	@echo "cargo run --bin parquet_population"
 
 build-prod-api-image: check_image_tag_env_var # Building a prod imag locally
 	@echo "Building container image"
